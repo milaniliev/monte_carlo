@@ -1,16 +1,12 @@
 require 'sugar'
 
 class Game
-  name: 'Bob'
-
   constructor: ->
 
-
-
     this.player = {
-      current_cash: 10000000
-      bet_amount: 1000
-      cashout_ceiling: 12000000
+      current_cash: 1000
+      bet_amount: 1
+      cashout_ceiling: 10000
 
       cumulative_winnings: ->
         this.bets.sum (bet) => bet.winnings || 0
@@ -63,7 +59,7 @@ class Game
   run: ->
     while this.player.solvent() and not(this.player.should_cash_out())
       bet = this.player.record_bet_outcome(this.roulette.bet_and_spin(this.player.next_bet()))
-      console.log "Bet ##{this.player.bets.length - 1} bet $#{bet.amount}, got #{bet.number}/40, #{bet.outcome} $#{bet.winnings}, player cash is $#{this.player.current_cash}"
+      # console.log "Bet ##{this.player.bets.length - 1} bet $#{bet.amount}, got #{bet.number}/40, #{bet.outcome} $#{bet.winnings}, player cash is $#{this.player.current_cash}"
 
       console.log "Made #{this.player.bets.length} bets, player has $#{this.player.current_cash}" if this.player.bets.length % 1000 == 0
 
@@ -76,7 +72,6 @@ games = []
 
 100.times (number) ->
   game = new Game()
-  console.log game.player.current_
   game.run()
   console.log "Game #{number} was a #{game.result} in #{game.player.bets.length} bets"
   games.push game
